@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:QuizAppMobile.ViewModels"
+             x:Class="QuizAppMobile.RegisterPage">
+
+    <ContentPage.BindingContext>
+        <viewmodels:RegisterVM/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center">
+            <Entry Placeholder="Username" Margin="20,0,20,10" Text="{Binding Username}"/>
+            <Entry Placeholder="Email" Keyboard="Email" Margin="20,0,20,10" Text="{Binding Email}"/>
+            <Entry Placeholder="Password" IsPassword="True" Margin="20,0,20,10" Text="{Binding Password}"/>
+            <Entry Placeholder="Password" IsPassword="True" Margin="20,0" Text="{Binding ConfirmPassword}"/>
+            <Button Text="Register" Padding="0" Margin="50,20,50,0" TextColor="White" 
+                BorderColor="{StaticResource Key=ButtonBorderPrimary}"
+                BackgroundColor="{StaticResource Key=ButtonBackgroundPrimary}"
+                Command="{Binding Register}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

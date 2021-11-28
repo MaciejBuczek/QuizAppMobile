@@ -16,5 +16,10 @@ namespace QuizAppMobile
         {
             InitializeComponent();
         }
+
+        private async void Button_Clicked_Login(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new LoginPage());
+        }
     }
 }

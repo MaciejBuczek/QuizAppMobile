@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuizAppMobile.MainPage">
+             x:Class="QuizAppMobile.StartPage">
 
     <StackLayout VerticalOptions="Center">
         <Label Text="Welcome in QuizzApp!" HorizontalOptions="Center" FontSize="35" TextColor="{StaticResource Key=Primary}" Margin="0,0,0,40" FontAttributes="Bold"/>
         <Button Text="Login" Padding="0" Margin="50,0" TextColor="White" 
-                BorderColor="{StaticResource Key=ButtonBorderPrimary}" BackgroundColor="{StaticResource Key=ButtonBackgroundPrimary}"/>
+                BorderColor="{StaticResource Key=ButtonBorderPrimary}"
+                BackgroundColor="{StaticResource Key=ButtonBackgroundPrimary}"
+                Clicked="Button_Clicked_Login"/>
         <Label Text="Or" HorizontalOptions="Center" FontSize="Medium"/>
-        <Button Text="Register" Margin="50,0"/>
+        <Button Text="Register" Margin="50,0"
+                Clicked="Button_Clicked_Register"/>
     </StackLayout>
 
 </ContentPage>

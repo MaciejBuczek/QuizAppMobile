@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Color x:Key ="Primary">#158cba</Color>
+    <Color x:Key ="Secondary">#e3e3e3</Color>
+    <Color x:Key ="Success">#ff291d</Color>
+    <Color x:Key ="Warning">#28b62c</Color>
+    <Color x:Key ="Danger">#ff7702</Color>
+
+    <Color x:Key ="ButtonBackgroundPrimary">#1b6ec2</Color>
+    <Color x:Key ="ButtonBorderPrimary">#1861ac</Color>
+</ResourceDictionary>

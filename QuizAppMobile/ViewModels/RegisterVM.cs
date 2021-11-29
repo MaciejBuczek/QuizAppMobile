@@ -29,7 +29,7 @@ namespace QuizAppMobile.ViewModels
 
         public string ConfirmPassword { get; set; }
 
-        public ICommand Register { get; set; }
+        public ICommand Register { get; }
 
         private async Task OnRegister()
         {

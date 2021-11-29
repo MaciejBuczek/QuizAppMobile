@@ -6,6 +6,6 @@ namespace QuizAppMobile.Services.Interfaces
     {
         Task<bool> RegisterAsync(string username, string email, string password);
 
-        Task<bool> LoginAsync(string username, string email);
+        Task<bool> LoginAsync(string username, string password);
     }
 }

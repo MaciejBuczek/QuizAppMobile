@@ -1,4 +1,4 @@
-﻿using QuizAppMobile.Configs;
+﻿using QuizAppMobile.Constants;
 using QuizAppMobile.Models.API;
 using QuizAppMobile.Services.Interfaces;
 using System;
@@ -18,9 +18,26 @@ namespace QuizAppMobile.Services.Implementations
             _httpClientProvider = DependencyService.Resolve<IHttpClientProvider>();
         }
 
-        public Task<bool> LoginAsync(string username, string email)
+        public async Task<bool> LoginAsync(string username, string password)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+            if (string.IsNullOrEmpty(password))
+                throw new ArgumentNullException(password);
+
+            var request = new LoginRequest
+            {
+                Username = username,
+                Password = password
+            };
+            var url = APIConfigs.BaseURL + APIConfigs.LoginURL;
+
+            HttpContent httpContent = JsonContent.Create(request);
+
+            var client = _httpClientProvider.GetClient();
+
+            var response = await client.PostAsync(url, httpContent);
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> RegisterAsync(string username, string email, string password)

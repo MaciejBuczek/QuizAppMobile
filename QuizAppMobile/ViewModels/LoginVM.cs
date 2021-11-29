@@ -36,7 +36,7 @@ namespace QuizAppMobile.ViewModels
                 return;
             }
 
-            if (await _userService.LoginAsync(Username, Password))
+            if (true/*await _userService.LoginAsync(Username, Password)*/)
             {
                 Application.Current.Properties[Properties.Username] = Username;
             }               

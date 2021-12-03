@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:QuizAppMobile.ViewModels"
+             x:Class="QuizAppMobile.Views.HomePage">
+
+    <ContentPage.BindingContext>
+        <viewmodels:HomeVM/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand">
+            <Label Text="{Binding WelcomeMessage}"
+                   VerticalOptions="StartAndExpand" 
+                   HorizontalOptions="EndAndExpand"
+                   TextColor="{StaticResource Key=Primary}"
+                   FontSize="Large" Margin="0,10,20,150"/>
+            <Entry Margin="50,0" Placeholder="Lobby Code" FontSize="Title"
+                   Text="{Binding LobbyCode}"/>
+            <Button Text="Connect" Padding="0" Margin="80,20,80,0" TextColor="White" 
+                    BorderColor="{StaticResource Key=ButtonBorderPrimary}"
+                    BackgroundColor="{StaticResource Key=ButtonBackgroundPrimary}"
+                    Command="{Binding Connect}"/>
+            <Label VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand"
+                   Text="Please provide a lobby code to connect to other users"
+                   FontSize="Medium"
+                   Margin="20,100,20,0"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

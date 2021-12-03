@@ -1,5 +1,6 @@
 ﻿using QuizAppMobile.Constants;
 using QuizAppMobile.Services.Interfaces;
+using QuizAppMobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -39,6 +40,7 @@ namespace QuizAppMobile.ViewModels
             if (true/*await _userService.LoginAsync(Username, Password)*/)
             {
                 Application.Current.Properties[Properties.Username] = Username;
+                await Application.Current.MainPage.Navigation.PushAsync(new HomePage());
             }               
             else
             {

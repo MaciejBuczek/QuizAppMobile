@@ -4,5 +4,6 @@
              x:Class="QuizAppMobile.App">
     <Application.Resources>
         <ResourceDictionary Source="Styles/Colors.xaml"/>
+        <ResourceDictionary Source="Styles/FontAwesome.xaml"/>
     </Application.Resources>
 </Application>

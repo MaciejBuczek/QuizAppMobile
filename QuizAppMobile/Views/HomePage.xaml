@@ -15,7 +15,8 @@
                    HorizontalOptions="EndAndExpand"
                    TextColor="{StaticResource Key=Primary}"
                    FontSize="Large" Margin="0,10,20,150"/>
-            <Entry Margin="50,0" Placeholder="Lobby Code" FontSize="Title"/>
+            <Entry Margin="50,0" Placeholder="Lobby Code" FontSize="Title"
+                   Text="{Binding LobbyCode}"/>
             <Button Text="Connect" Padding="0" Margin="80,20,80,0" TextColor="White" 
                     BorderColor="{StaticResource Key=ButtonBorderPrimary}"
                     BackgroundColor="{StaticResource Key=ButtonBackgroundPrimary}"

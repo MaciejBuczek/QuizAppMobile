@@ -40,6 +40,7 @@ namespace QuizAppMobile
             DependencyService.Register<IMessageService, AlertMessageService>();
             DependencyService.Register<IUserService, UserAPIService>();
             DependencyService.Register<IHttpClientProvider, UnsafeHttpClientProvider>();
+            DependencyService.Register<ILobbyService, LobbyAPIService>();
         }
     }
 }

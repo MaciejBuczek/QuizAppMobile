@@ -7,5 +7,9 @@
         public static readonly string RegisterURL = "User/Register";
 
         public static readonly string LoginURL = "User/Login";
+
+        public static readonly string CheckLobbyCodeURL = "Lobby/CheckCode";
+
+        public static readonly string JoinURL = "Lobby/JoinAPI";
     }
 }

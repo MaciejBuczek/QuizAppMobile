@@ -1,12 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuizAppMobile.Views.LobbyPage">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:QuizAppMobile.ViewModels"
+             x:Class="QuizAppMobile.Views.LobbyPage"
+             xmlns:fontawesome="clr-namespace:FontAwesome">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:LobbyVM/>
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="10,0,0,0">
+            <StackLayout x:Name="RatingBox" Orientation="Horizontal" HorizontalOptions="EndAndExpand" Padding="0,10,10,0"/>
+            <Label Text="{Binding Title}" TextColor="{StaticResource Key=Primary}"
+                   FontSize="Title"  Margin="0,10,0,0" FontAttributes="Bold"/>
+            <Label Text="{Binding Description}" FontSize="Large" Margin="0,10,0,0"/>
+            <StackLayout Orientation="Vertical" Margin="0,10,0,0">
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal" WidthRequest="170">
+                        <Label Text="{x:Static fontawesome:FontAwesomeIcons.QuestionCircle}" 
+                                       FontFamily="{StaticResource FontAwesomeRegular}" FontSize="Medium" Margin="0,2,0,0"/>
+                        <Label Text="Total questions:" FontAttributes="Bold" FontSize="Medium"/>
+                        <Label Text="{Binding TotalQuestions}" FontSize="Medium"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static fontawesome:FontAwesomeIcons.Clock}" 
+                                       FontFamily="{StaticResource FontAwesomeRegular}" FontSize="Medium" Margin="0,2,0,0"/>
+                        <Label Text="Total time required:" FontAttributes="Bold" FontSize="Medium"/>
+                        <Label Text="{Binding TotalTime}" FontSize="Medium"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal" WidthRequest="170">
+                        <Label Text="{x:Static fontawesome:FontAwesomeIcons.User}" 
+                                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Medium" Margin="0,2,0,0"/>
+                        <Label Text="Created by:" FontAttributes="Bold" FontSize="Medium"/>
+                        <Label Text="{Binding CreatedBy}" FontSize="Medium"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static fontawesome:FontAwesomeIcons.CalendarAlt}" 
+                                       FontFamily="{StaticResource FontAwesomeRegular}" FontSize="Medium" Margin="0,2,0,0"/>
+                        <Label Text="Created on:" FontAttributes="Bold" FontSize="Medium"/>
+                        <Label Text="{Binding CreatedOn, StringFormat='{0:dd-MM-yyyy}'}" FontSize="Medium"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static fontawesome:FontAwesomeIcons.Medal}" 
+                                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Medium" Margin="0,2,0,0"/>
+                        <Label Text="Total points:" FontAttributes="Bold" FontSize="Medium"/>
+                        <Label Text="{Binding TotalPoints}" FontSize="Medium"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <Label Text="Connected users:" FontSize="Large" FontAttributes="Bold" TextColor="{StaticResource Key=Primary}"/>
+            <Label Text="Waiting for host to start the quiz..."/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

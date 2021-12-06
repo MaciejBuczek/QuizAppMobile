@@ -28,16 +28,10 @@ namespace QuizAppMobile.Services.Implementations
             _hubConnection.On("redirectToQuiz", RedirectToQuizAction);
         }
 
-        public async Task Connect(string lobbyCode)
+        public async Task Connect(string lobbyCode, string userId)
         {
-            try
-            {
-                await _hubConnection.StartAsync();
-            }catch (Exception e)
-            {
-
-            }
-            await _hubConnection.InvokeAsync("ConnectToLobby", lobbyCode);
+            await _hubConnection.StartAsync();
+            await _hubConnection.InvokeAsync("ConnectToLobbyMobile", lobbyCode, userId);
         }
     }
 }

@@ -58,6 +58,8 @@ namespace QuizAppMobile.ViewModels
 
         public StackLayout RatingBox { get; set; }
 
+        public StackLayout UserBox { get; set; }
+
         public void RenderRatings()
         {
             var filledStars = Rating;
@@ -85,17 +87,52 @@ namespace QuizAppMobile.ViewModels
 
         public async Task StartConnection()
         {
-            await _lobbyConnection.Connect(LobbyCode);
+            if (Application.Current.Properties.TryGetValue(Properties.UserId, out var userId))
+            {
+                await _lobbyConnection.Connect(LobbyCode, (string)userId);
+            }
+            return;
         }
 
         private void InitializeUsers(Lobby lobby)
         {
+            AddHostUser(lobby.OwnerUsername);
 
+            foreach (var user in lobby.ConnectedUsers)
+                AddUser(user);
         }
 
         private void AddUser (string username)
         {
+            var usernameLabel = new Label
+            {
+                Text = username,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+            };
+            UserBox.Children.Add(usernameLabel);
+        }
 
+        private void AddHostUser(string username)
+        {
+            var stackLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.StartAndExpand
+            };
+            var crownIcon = new Label
+            {
+                Text = FontAwesomeIcons.Crown,
+                FontFamily = Device.RuntimePlatform == Device.Android ? AndroidFonts.Solid : string.Empty,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+            };
+            var usernameLabel = new Label
+            {
+                Text = username,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+            };
+            stackLayout.Children.Add(crownIcon);
+            stackLayout.Children.Add(usernameLabel);
+            UserBox.Children.Add(stackLayout);
         }
 
         private void Kick()

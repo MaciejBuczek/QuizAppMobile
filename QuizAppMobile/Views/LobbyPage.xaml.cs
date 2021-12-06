@@ -29,7 +29,8 @@ namespace QuizAppMobile.Views
                 TotalQuestions = obj.TotalQuestions,
                 TotalPoints = obj.TotalPoints,
                 TotalTime = obj.TotalTime.ToString(),
-                RatingBox = RatingBox
+                RatingBox = RatingBox,
+                UserBox = UserBox
             };
 
             BindingContext = vm;

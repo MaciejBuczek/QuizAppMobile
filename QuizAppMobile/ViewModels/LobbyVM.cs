@@ -1,8 +1,11 @@
 ﻿using FontAwesome;
 using QuizAppMobile.Constants;
+using QuizAppMobile.Models.SignalR;
+using QuizAppMobile.Services.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace QuizAppMobile.ViewModels
@@ -10,6 +13,22 @@ namespace QuizAppMobile.ViewModels
     public class LobbyVM : BindableObject
     {
         private string _totalTime;
+
+        private readonly LobbyConnection _lobbyConnection;
+
+        public LobbyVM()
+        {
+            _lobbyConnection = new LobbyConnection
+            (
+                InitializeUsers,
+                AddUser,
+                CloseLobby,
+                Kick,
+                RedirectToQuiz
+            );
+        }
+
+        public string LobbyCode { get; set; }
 
         public string Title { get; set; }
 
@@ -62,6 +81,36 @@ namespace QuizAppMobile.ViewModels
                 };
                 RatingBox.Children.Add(emptyStarLabel);
             }
+        }
+
+        public async Task StartConnection()
+        {
+            await _lobbyConnection.Connect(LobbyCode);
+        }
+
+        private void InitializeUsers(Lobby lobby)
+        {
+
+        }
+
+        private void AddUser (string username)
+        {
+
+        }
+
+        private void Kick()
+        {
+
+        }
+
+        private void RedirectToQuiz(string url)
+        {
+
+        }
+
+        private void CloseLobby()
+        {
+
         }
     }
 }

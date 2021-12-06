@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 using QuizAppMobile.Constants;
 using QuizAppMobile.Models.API;
 using QuizAppMobile.Services.Interfaces;
@@ -10,7 +11,7 @@ namespace QuizAppMobile.Services.Implementations
 {
     public class LobbyAPIService : ILobbyService
     {
-        private IHttpClientProvider _httpClientProvider;
+        private readonly IHttpClientProvider _httpClientProvider;
 
         public LobbyAPIService()
         {

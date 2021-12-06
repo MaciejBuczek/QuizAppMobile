@@ -14,12 +14,13 @@ namespace QuizAppMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LobbyPage : ContentPage
     {
-        public LobbyPage(JoinResponse obj)
+        public LobbyPage(JoinResponse obj, string lobbyCode)
         {
             InitializeComponent();
 
-            var vm = new LobbyVM
+            var vm = new LobbyVM()
             {
+                LobbyCode = lobbyCode,
                 Title = obj.Title,
                 Description = obj.Description,
                 CreatedBy = obj.CreatedBy,
@@ -34,6 +35,7 @@ namespace QuizAppMobile.Views
             BindingContext = vm;
 
             vm.RenderRatings();
+            vm.StartConnection();
         }
     }
 }

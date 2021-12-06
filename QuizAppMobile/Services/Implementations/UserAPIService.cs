@@ -1,4 +1,5 @@
-﻿using QuizAppMobile.Constants;
+﻿using Newtonsoft.Json;
+using QuizAppMobile.Constants;
 using QuizAppMobile.Models.API;
 using QuizAppMobile.Services.Interfaces;
 using System;
@@ -18,7 +19,7 @@ namespace QuizAppMobile.Services.Implementations
             _httpClientProvider = DependencyService.Resolve<IHttpClientProvider>();
         }
 
-        public async Task<bool> LoginAsync(string username, string password)
+        public async Task<(bool Succeded, string UserId)> LoginAsync(string username, string password)
         {
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentNullException(nameof(username));
@@ -37,7 +38,13 @@ namespace QuizAppMobile.Services.Implementations
             var client = _httpClientProvider.GetClient();
 
             var response = await client.PostAsync(url, httpContent);
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = await response.Content.ReadAsStringAsync();
+                var responseObj = JsonConvert.DeserializeObject<string>(responseJson);
+                return (true, responseObj);
+            }
+            return (false, null);
         }
 
         public async Task<bool> RegisterAsync(string username, string email, string password)

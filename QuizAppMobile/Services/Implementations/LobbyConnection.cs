@@ -33,5 +33,10 @@ namespace QuizAppMobile.Services.Implementations
             await _hubConnection.StartAsync();
             await _hubConnection.InvokeAsync("ConnectToLobbyMobile", lobbyCode, userId);
         }
+
+        public async Task Disconnect()
+        {
+            await _hubConnection.StopAsync();
+        }
     }
 }

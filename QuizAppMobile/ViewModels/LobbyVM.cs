@@ -2,8 +2,11 @@
 using QuizAppMobile.Constants;
 using QuizAppMobile.Models.SignalR;
 using QuizAppMobile.Services.Implementations;
+using QuizAppMobile.Services.Interfaces;
+using QuizAppMobile.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -16,16 +19,22 @@ namespace QuizAppMobile.ViewModels
 
         private readonly LobbyConnection _lobbyConnection;
 
+        private readonly IMessageService _messageService;
+
         public LobbyVM()
         {
+            _messageService = DependencyService.Resolve<IMessageService>();
+
             _lobbyConnection = new LobbyConnection
             (
                 InitializeUsers,
                 AddUser,
-                CloseLobby,
-                Kick,
+                new Action(async () => await CloseLobby()),
+                new Action(async () => await Kick()),
                 RedirectToQuiz
             );
+
+            UserCollection = new ObservableCollection<View>();
         }
 
         public string LobbyCode { get; set; }
@@ -59,6 +68,8 @@ namespace QuizAppMobile.ViewModels
         public StackLayout RatingBox { get; set; }
 
         public StackLayout UserBox { get; set; }
+
+        public ObservableCollection<View> UserCollection { get; set; }
 
         public void RenderRatings()
         {
@@ -94,25 +105,39 @@ namespace QuizAppMobile.ViewModels
             return;
         }
 
-        private void InitializeUsers(Lobby lobby)
+        private void AddUser(string username)
         {
-            AddHostUser(lobby.OwnerUsername);
 
-            foreach (var user in lobby.ConnectedUsers)
-                AddUser(user);
         }
 
-        private void AddUser (string username)
+        private void InitializeUsers(Lobby lobby)
+        {
+            //var childList = new List<View>();
+            var stackLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical
+            };
+            //childList.Add(GetHostStackLayout(lobby.OwnerUsername));
+            stackLayout.Children.Add(GetHostStackLayout(lobby.OwnerUsername));
+            foreach (var user in lobby.ConnectedUsers)
+                stackLayout.Children.Add(GetUserLabel(user));
+            //childList.Add(GetUserLabel(user));
+            UserBox.Children.Add(stackLayout);
+            //foreach (var component in childList)
+                //UserBox.Children.Add(component);
+        }
+
+        private Label GetUserLabel (string username)
         {
             var usernameLabel = new Label
             {
                 Text = username,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
             };
-            UserBox.Children.Add(usernameLabel);
+            return usernameLabel;
         }
 
-        private void AddHostUser(string username)
+        private StackLayout GetHostStackLayout(string username)
         {
             var stackLayout = new StackLayout
             {
@@ -132,12 +157,12 @@ namespace QuizAppMobile.ViewModels
             };
             stackLayout.Children.Add(crownIcon);
             stackLayout.Children.Add(usernameLabel);
-            UserBox.Children.Add(stackLayout);
+            return stackLayout;
         }
 
-        private void Kick()
+        private async Task Kick()
         {
-
+            await DisconectFromLobby("You have been kicked from the lobby");
         }
 
         private void RedirectToQuiz(string url)
@@ -145,9 +170,16 @@ namespace QuizAppMobile.ViewModels
 
         }
 
-        private void CloseLobby()
+        private async Task CloseLobby()
         {
+            await DisconectFromLobby("The host has closed this lobby");
+        }
 
+        private async Task DisconectFromLobby(string message)
+        {
+            await _lobbyConnection.Disconnect();
+            await _messageService.DisplayErrorMessage(message);         
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

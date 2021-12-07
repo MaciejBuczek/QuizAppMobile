@@ -55,7 +55,14 @@
                     </StackLayout>
                 </StackLayout>
                 <Label Text="Connected users:" FontSize="Large" FontAttributes="Bold" TextColor="{StaticResource Key=Primary}"/>
-                <StackLayout x:Name="UserBox" Orientation="Vertical"/>
+                <StackLayout x:Name="UserBox" Orientation="Vertical" />
+                <ListView ItemsSource="{Binding UserCollection}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <Label Text="Waiting for host to start the quiz..."/>
             </StackLayout>
         </ScrollView>

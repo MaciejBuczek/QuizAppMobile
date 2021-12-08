@@ -1,5 +1,6 @@
 ﻿using FontAwesome;
 using QuizAppMobile.Constants;
+using QuizAppMobile.Models;
 using QuizAppMobile.Models.SignalR;
 using QuizAppMobile.Services.Implementations;
 using QuizAppMobile.Services.Interfaces;
@@ -34,7 +35,7 @@ namespace QuizAppMobile.ViewModels
                 RedirectToQuiz
             );
 
-            UserCollection = new ObservableCollection<View>();
+            UserCollection = new ObservableCollection<User>();
         }
 
         public string LobbyCode { get; set; }
@@ -67,9 +68,9 @@ namespace QuizAppMobile.ViewModels
 
         public StackLayout RatingBox { get; set; }
 
-        public StackLayout UserBox { get; set; }
+        public StackLayout HostBox { get; set; }
 
-        public ObservableCollection<View> UserCollection { get; set; }
+        public ObservableCollection<User> UserCollection { get; set; }
 
         public void RenderRatings()
         {
@@ -112,19 +113,8 @@ namespace QuizAppMobile.ViewModels
 
         private void InitializeUsers(Lobby lobby)
         {
-            //var childList = new List<View>();
-            var stackLayout = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical
-            };
-            //childList.Add(GetHostStackLayout(lobby.OwnerUsername));
-            stackLayout.Children.Add(GetHostStackLayout(lobby.OwnerUsername));
-            foreach (var user in lobby.ConnectedUsers)
-                stackLayout.Children.Add(GetUserLabel(user));
-            //childList.Add(GetUserLabel(user));
-            UserBox.Children.Add(stackLayout);
-            //foreach (var component in childList)
-                //UserBox.Children.Add(component);
+            HostBox.Children.Add(GetHostStackLayout(lobby.OwnerUsername));
+            lobby.ConnectedUsers.ForEach(u => UserCollection.Add(new User { Username = u }));
         }
 
         private Label GetUserLabel (string username)

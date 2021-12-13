@@ -32,7 +32,7 @@ namespace QuizAppMobile.ViewModels
                 AddUser,
                 new Action(async () => await CloseLobby()),
                 new Action(async () => await Kick()),
-                new Action<string>(async (url) => await RedirectToQuiz(url);
+                new Action<string>(async (url) => await RedirectToQuiz(url))
             );
 
             UserCollection = new ObservableCollection<User>();

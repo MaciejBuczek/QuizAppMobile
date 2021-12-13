@@ -6,6 +6,10 @@ namespace QuizAppMobile.Models.API
 {
     public class JoinResponse
     {
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
         public double Rating { get; set; }
 
         public int TotalQuestions { get; set; }

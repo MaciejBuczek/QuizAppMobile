@@ -32,7 +32,7 @@ namespace QuizAppMobile.ViewModels
                 AddUser,
                 new Action(async () => await CloseLobby()),
                 new Action(async () => await Kick()),
-                RedirectToQuiz
+                new Action<string>(async (url) => await RedirectToQuiz(url);
             );
 
             UserCollection = new ObservableCollection<User>();
@@ -154,10 +154,11 @@ namespace QuizAppMobile.ViewModels
         {
             await DisconectFromLobby("You have been kicked from the lobby");
         }
-
-        private void RedirectToQuiz(string url)
+        
+        private async Task RedirectToQuiz(string url)
         {
-
+            await Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PushAsync(new QuizPage(LobbyCode));
         }
 
         private async Task CloseLobby()

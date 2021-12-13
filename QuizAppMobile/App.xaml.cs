@@ -21,6 +21,9 @@ namespace QuizAppMobile
                 nextPage = new HomePage();
             else
                 nextPage = new StartPage();
+
+            nextPage = new QuizPage("aaa");
+
             MainPage = new NavigationPage(nextPage);
         }
 

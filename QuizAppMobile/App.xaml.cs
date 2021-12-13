@@ -15,6 +15,7 @@ namespace QuizAppMobile
             InitializeComponent();
             SetDependencies();
             Current.Properties[Constants.Properties.Username] = "Wydra";
+            Current.Properties[Constants.Properties.UserId] = "913e7d37-6421-4220-8c78-9c36c90d8a4d";
             Page nextPage;
             if (Current.Properties.ContainsKey(Constants.Properties.Username))
                 nextPage = new HomePage();
@@ -41,6 +42,7 @@ namespace QuizAppMobile
             DependencyService.Register<IUserService, UserAPIService>();
             DependencyService.Register<IHttpClientProvider, UnsafeHttpClientProvider>();
             DependencyService.Register<ILobbyService, LobbyAPIService>();
+            DependencyService.Register<IHubConnectionProvider, UnsafeConnectionProvider>();
         }
     }
 }

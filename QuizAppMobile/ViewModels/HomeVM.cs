@@ -37,7 +37,7 @@ namespace QuizAppMobile.ViewModels
             {
                 var response = await _lobbyService.ConnectToLobby(LobbyCode);
                 if (response != null)
-                    await Application.Current.MainPage.Navigation.PushAsync(new LobbyPage(response));
+                    await Application.Current.MainPage.Navigation.PushAsync(new LobbyPage(response, LobbyCode));
                 else
                     await _messageService.DisplayErrorMessage("Cannot connect to lobby");
             }

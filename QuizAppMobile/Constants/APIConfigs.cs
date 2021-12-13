@@ -11,5 +11,7 @@
         public static readonly string CheckLobbyCodeURL = "Lobby/CheckCode";
 
         public static readonly string JoinURL = "Lobby/JoinAPI";
+
+        public static readonly string LobbyHubURL = "hubs/lobby";
     }
 }

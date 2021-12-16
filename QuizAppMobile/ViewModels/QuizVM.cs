@@ -4,6 +4,7 @@ using QuizAppMobile.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ namespace QuizAppMobile.ViewModels
 {
     class QuizVM : BindableObject
     {
+
         private readonly IMessageService _messageService;
 
         public string LobbyCode { get; set; }
@@ -21,19 +23,27 @@ namespace QuizAppMobile.ViewModels
 
         public string Question { get; set; }
 
-        public Timer Timer { get; }
+        public int QuestionTime { get; set; }
 
         public ObservableCollection<Answer> Answers {get; set;}
 
         public ObservableCollection<UserScore> Users { get; set; }
 
-        public ICommand Test { get; set; }
+        public string TimeLeft { get; set; }
+
+        public ICommand StartTimerCommand { get; set; }
+
+        public ICommand StopTimerCommand { get; set; }
+
+        public Action<int> StartTimerAction { get; set; }
+
+        public Action StopTimerAction { get; set; }
 
         public QuizVM()
         {
-            Timer = new Timer(async () => await SubmitAnswer());
             _messageService = DependencyService.Resolve<IMessageService>();
-            Test = new Command(TestAct);
+            StartTimerCommand = new Command(StartTimer);
+            StopTimerCommand = new Command(StopTimer);
 
             Answers = new ObservableCollection<Answer>()
             {
@@ -68,14 +78,19 @@ namespace QuizAppMobile.ViewModels
             };
         }
 
-        public void TestAct()
+        private void StartTimer()
         {
-            Timer.Start(10);
+            StartTimerAction(5);
+        }
+
+        private void StopTimer()
+        {
+            StopTimerAction();
         }
 
         public async Task SubmitAnswer()
         {
             await _messageService.DisplaySuccessMessage("test");
-        }
+        }      
     }
 }

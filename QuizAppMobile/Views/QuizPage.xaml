@@ -12,7 +12,8 @@
         <ScrollView>
             <StackLayout Orientation="Horizontal">
                 <StackLayout Orientation="Vertical" Padding="5" WidthRequest="700">
-                    <Button Text="Tesst" Command="{Binding Test}"/>
+                    <Button Text="Start" Command="{Binding StartTimerCommand}"/>
+                    <Button Text="Stop" Command="{Binding StopTimerCommand}"/>
                     <Label Text="{Binding Title}" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="Large"/>
                     <Label Text="{Binding Question}" FontSize="Medium"/>
                     <ListView VerticalOptions="StartAndExpand" ItemsSource="{Binding Answers}">
@@ -29,7 +30,7 @@
                     </ListView>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" HorizontalOptions="Center">
-                    <Label Text="{Binding Timer.TimerFormatted}" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="80" HorizontalOptions="CenterAndExpand"/>
+                    <Label x:Name="TimerLabel" Text="00:00" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="80" HorizontalOptions="CenterAndExpand"/>
                     <Label Text="Scoreboard" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="Medium"/>
                     <ListView VerticalOptions="StartAndExpand" ItemsSource="{Binding Users}">
                         <ListView.ItemTemplate>

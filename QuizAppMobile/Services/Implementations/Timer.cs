@@ -1,48 +1,59 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace QuizAppMobile.Services.Implementations
 {
     public class Timer : CancellationTokenSource
     {
         private readonly Action _finishAction;
-        private int duration;
+        private readonly Action<int> _midAction;
+        private int _duration;
+        private int _totalDuration;
 
-        public string TimerFormatted { 
-            get 
-            {
-                int minutes = duration / 60;
-                int seconds = duration % 60;
-                string minutesString = minutes < 10 ? $"0{minutes}" : minutes.ToString();
-                string secondsString = seconds < 10 ? $"0{seconds}" : seconds.ToString();
-                return $"{minutesString}:{secondsString}";
-            }
-        }
+        public delegate void OnTick(string time);
+        public OnTick OnTickDelegate;
 
-        public Timer(Action finishingAction)
+
+        public Timer(Action finishingAction, Action<int> midAction)
         {
             _finishAction = finishingAction;
+            _midAction = midAction;
         }
 
 
         public void Start(int totalDuration)
         {
-            duration = 0;
+            _totalDuration = totalDuration;
+            _duration = 0;
             
             Task.Run(() =>
             {
-                while(totalDuration > duration && !IsCancellationRequested)
+                while(_totalDuration > _duration && !IsCancellationRequested)
                 {
-                    Task.Delay(1000, Token);
+                    Task.Delay(1000, Token).Wait();
+                    _duration++;
+                    Console.WriteLine(_duration);
+                    _midAction(_duration);
                 }
-                _finishAction();             
+                _finishAction();            
             });
         }
 
         public void Stop()
         {
             Cancel();
+        }
+
+        private string GenerateFormattedTime()
+        {
+            Console.WriteLine("testaaaaa");
+            int minutes = (_totalDuration - _duration) / 60;
+            int seconds = (_totalDuration - _duration) % 60;
+            string minutesString = minutes < 10 ? $"0{minutes}" : minutes.ToString();
+            string secondsString = seconds < 10 ? $"0{seconds}" : seconds.ToString();
+            return $"{minutes}:{seconds}";
         }
     }
 }

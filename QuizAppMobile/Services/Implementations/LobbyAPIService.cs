@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace QuizAppMobile.Services.Implementations
+namespace QuizAppMobile.Services.Connections
 {
     public class LobbyAPIService : ILobbyService
     {

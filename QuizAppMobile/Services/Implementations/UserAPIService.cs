@@ -8,7 +8,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace QuizAppMobile.Services.Implementations
+namespace QuizAppMobile.Services.Connections
 {
     public class UserAPIService : IUserService
     {

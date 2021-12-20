@@ -1,4 +1,4 @@
-﻿using QuizAppMobile.Services.Implementations;
+﻿using QuizAppMobile.Services.Connections;
 using QuizAppMobile.Services.Interfaces;
 using System;
 using Xamarin.Forms;
@@ -21,8 +21,6 @@ namespace QuizAppMobile
                 nextPage = new HomePage();
             else
                 nextPage = new StartPage();
-
-            nextPage = new QuizPage("aaa");
 
             MainPage = new NavigationPage(nextPage);
         }

@@ -2,7 +2,7 @@
 using QuizAppMobile.Services.Interfaces;
 using System.Net.Http;
 
-namespace QuizAppMobile.Services.Implementations
+namespace QuizAppMobile.Services.Connections
 {
     class UnsafeConnectionProvider : IHubConnectionProvider
     {

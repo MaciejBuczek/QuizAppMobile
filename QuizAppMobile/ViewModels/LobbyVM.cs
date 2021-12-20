@@ -2,7 +2,7 @@
 using QuizAppMobile.Constants;
 using QuizAppMobile.Models;
 using QuizAppMobile.Models.SignalR;
-using QuizAppMobile.Services.Implementations;
+using QuizAppMobile.Services.Connections;
 using QuizAppMobile.Services.Interfaces;
 using QuizAppMobile.Views;
 using System;

@@ -1,7 +1,7 @@
 ﻿using QuizAppMobile.Services.Interfaces;
 using System.Net.Http;
 
-namespace QuizAppMobile.Services.Implementations
+namespace QuizAppMobile.Services.Connections
 {
     public class UnsafeHttpClientProvider : IHttpClientProvider
     {

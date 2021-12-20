@@ -1,7 +1,7 @@
 ﻿using QuizAppMobile.Services.Interfaces;
 using System.Threading.Tasks;
 
-namespace QuizAppMobile.Services.Implementations
+namespace QuizAppMobile.Services.Connections
 {
     public class AlertMessageService : IMessageService
     {

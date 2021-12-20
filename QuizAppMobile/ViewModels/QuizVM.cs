@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -19,11 +20,13 @@ namespace QuizAppMobile.ViewModels
 
         private readonly IMessageService _messageService;
 
-        private QuizConnection _quizConnection;
-
-        public string LobbyCode { get; set; }
+        private readonly QuizConnection _quizConnection;
 
         private string _title;
+
+        private string _question;
+
+        public string LobbyCode { get; set; }
 
         public string Title {
             get
@@ -37,7 +40,18 @@ namespace QuizAppMobile.ViewModels
             } 
         }
 
-        public string Question { get; set; }
+        public string Question
+        {
+            get
+            {
+                return _question;
+            }
+            set
+            {
+                _question = value;
+                OnPropertyChanged(nameof(Question));
+            }
+        }
 
         public int QuestionTime { get; set; }
 
@@ -45,15 +59,16 @@ namespace QuizAppMobile.ViewModels
 
         public ObservableCollection<Models.SignalR.UserScore> Users { get; set; } = new ObservableCollection<Models.SignalR.UserScore>();
 
-        public string TimeLeft { get; set; }
-
         public Action<int> StartTimerAction { get; set; }
 
         public Action StopTimerAction { get; set; }
 
+        public ICommand SubmitAnswersCommand { get; set; }
+
         public QuizVM()
         {
             _messageService = DependencyService.Resolve<IMessageService>();
+            SubmitAnswersCommand = new Command(new Action(SubmitAnswers));
 
             _quizConnection = new QuizConnection
                 (
@@ -63,13 +78,14 @@ namespace QuizAppMobile.ViewModels
                     new Action<string>(async (message) => await DisplayError(message)),
                     new Action(async () => await RequestQuestion()),
                     new Action(async () => await RedirectToSummary()),
-                    BeginQuiz
+                    new Action(async () => await BeginQuiz())
                 );
         }
 
         private void InitializeQuiz(QuizInfo quizInfo)
         {
             Title = quizInfo.QuizTitle;
+            Users.Clear();
             quizInfo.UsersScores.ForEach(us => Users.Add(us));
         }
 
@@ -80,17 +96,27 @@ namespace QuizAppMobile.ViewModels
 
         private void LoadQuestion(PersonalisedQuestion question)
         {
-
+            Question = question.Question;
+            Answers.Clear();
+            question.Answers.Select(a => new Answer
+            {
+                Content = a,
+                Selected = false
+            }).
+            ToList()
+            .ForEach(a => Answers.Add(a));
+            StartTimerAction(question.Time);
         }
 
         private async Task DisplayError(string message)
         {
-
+            await _messageService.DisplayErrorMessage(message);
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
 
         private async Task RequestQuestion()
         {
-
+            await _quizConnection.GetQuestion();
         }
 
         private async Task RedirectToSummary()
@@ -98,9 +124,21 @@ namespace QuizAppMobile.ViewModels
 
         }
 
-        private void BeginQuiz()
+        private async Task BeginQuiz()
         {
+            await RequestQuestion();
+        }
 
+        public async void SubmitAnswers()
+        {
+            StopTimerAction();
+            var selectedAnswers = new List<int>();
+            for(int i = 0; i < Answers.Count; i++)
+            {
+                if (Answers[i].Selected)
+                    selectedAnswers.Add(i);
+            }
+            await _quizConnection.SubmitAnswers(selectedAnswers.ToArray());
         }
 
         public async void Connect()
@@ -121,10 +159,5 @@ namespace QuizAppMobile.ViewModels
         {
             StopTimerAction();
         }
-
-        public async Task SubmitAnswer()
-        {
-            await _messageService.DisplaySuccessMessage("test");
-        }      
     }
 }

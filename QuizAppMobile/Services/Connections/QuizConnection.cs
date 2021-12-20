@@ -41,5 +41,15 @@ namespace QuizAppMobile.Services.Connections
         {
             await _hubConnection.StopAsync();
         }
+
+        public async Task GetQuestion()
+        {
+            await _hubConnection.InvokeAsync("GetQuestion");
+        }
+
+        public async Task SubmitAnswers(int[] answers)
+        {
+            await _hubConnection.InvokeAsync("ProcessAnswers", answers);
+        }
     }
 }

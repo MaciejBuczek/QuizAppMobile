@@ -12,10 +12,12 @@
         <ScrollView>
             <StackLayout Orientation="Horizontal">
                 <StackLayout Orientation="Vertical" Padding="5" WidthRequest="700">
-                    <Button Text="Start" Command="{Binding StartTimerCommand}"/>
-                    <Button Text="Stop" Command="{Binding StopTimerCommand}"/>
                     <Label Text="{Binding Title}" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="Large"/>
                     <Label Text="{Binding Question}" FontSize="Medium"/>
+                    <Button Text="Submit Answers" FontSize="Medium" TextColor="White"
+                            BorderColor="{StaticResource Key=ButtonBorderPrimary}" 
+                            BackgroundColor="{StaticResource Key=ButtonBackgroundPrimary}"
+                            Command="{Binding SubmitAnswersCommand}"/>
                     <ListView VerticalOptions="StartAndExpand" ItemsSource="{Binding Answers}">
                         <ListView.ItemTemplate>
                             <DataTemplate>

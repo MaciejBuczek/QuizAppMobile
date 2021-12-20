@@ -15,17 +15,18 @@ namespace QuizAppMobile.Views
     public partial class QuizPage : ContentPage
     {
         private bool _stopTimer = false;
+        private QuizVM _vm;
 
         public QuizPage(string lobbyCode)
         {
             InitializeComponent();
 
-            var vm = BindingContext as QuizVM;
+            _vm = BindingContext as QuizVM;
 
-            vm.LobbyCode = lobbyCode;
-            vm.StartTimerAction = StartTimer;
-            vm.StopTimerAction = StopTimer;
-            vm.Connect();
+            _vm.LobbyCode = lobbyCode;
+            _vm.StartTimerAction = StartTimer;
+            _vm.StopTimerAction = StopTimer;
+            _vm.Connect();
         }
 
         private void StartTimer(int totalDuration)
@@ -39,6 +40,7 @@ namespace QuizAppMobile.Views
 
                 if(_stopTimer || totalDuration == duration)
                 {
+                    _vm.SubmitAnswers();
                     return false;
                 }
                 return true;

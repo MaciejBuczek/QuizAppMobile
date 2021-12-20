@@ -1,4 +1,6 @@
-﻿using QuizAppMobile.Models;
+﻿using QuizAppMobile.Constants;
+using QuizAppMobile.Models;
+using QuizAppMobile.Models.SignalR;
 using QuizAppMobile.Services.Connections;
 using QuizAppMobile.Services.Interfaces;
 using System;
@@ -12,28 +14,38 @@ using Xamarin.Forms;
 
 namespace QuizAppMobile.ViewModels
 {
-    class QuizVM : BindableObject
+    public class QuizVM : BindableObject
     {
 
         private readonly IMessageService _messageService;
 
+        private QuizConnection _quizConnection;
+
         public string LobbyCode { get; set; }
 
-        public string Title { get; set; }
+        private string _title;
+
+        public string Title {
+            get
+            {
+                return _title;
+            } 
+            set 
+            {
+                _title = value;
+                OnPropertyChanged(nameof(Title));
+            } 
+        }
 
         public string Question { get; set; }
 
         public int QuestionTime { get; set; }
 
-        public ObservableCollection<Answer> Answers {get; set;}
+        public ObservableCollection<Answer> Answers {get; set;} = new ObservableCollection<Answer>();
 
-        public ObservableCollection<UserScore> Users { get; set; }
+        public ObservableCollection<Models.SignalR.UserScore> Users { get; set; } = new ObservableCollection<Models.SignalR.UserScore>();
 
         public string TimeLeft { get; set; }
-
-        public ICommand StartTimerCommand { get; set; }
-
-        public ICommand StopTimerCommand { get; set; }
 
         public Action<int> StartTimerAction { get; set; }
 
@@ -42,40 +54,62 @@ namespace QuizAppMobile.ViewModels
         public QuizVM()
         {
             _messageService = DependencyService.Resolve<IMessageService>();
-            StartTimerCommand = new Command(StartTimer);
-            StopTimerCommand = new Command(StopTimer);
 
-            Answers = new ObservableCollection<Answer>()
+            _quizConnection = new QuizConnection
+                (
+                    InitializeQuiz,
+                    UpdateScoreboard,
+                    LoadQuestion,
+                    new Action<string>(async (message) => await DisplayError(message)),
+                    new Action(async () => await RequestQuestion()),
+                    new Action(async () => await RedirectToSummary()),
+                    BeginQuiz
+                );
+        }
+
+        private void InitializeQuiz(QuizInfo quizInfo)
+        {
+            Title = quizInfo.QuizTitle;
+            quizInfo.UsersScores.ForEach(us => Users.Add(us));
+        }
+
+        private void UpdateScoreboard(List<Models.SignalR.UserScore> userScores)
+        {
+
+        }
+
+        private void LoadQuestion(PersonalisedQuestion question)
+        {
+
+        }
+
+        private async Task DisplayError(string message)
+        {
+
+        }
+
+        private async Task RequestQuestion()
+        {
+
+        }
+
+        private async Task RedirectToSummary()
+        {
+
+        }
+
+        private void BeginQuiz()
+        {
+
+        }
+
+        public async void Connect()
+        {
+            if (Application.Current.Properties.TryGetValue(Properties.UserId, out var userId))
             {
-                new Answer
-                {
-                    Selected = false,
-                    Content = "non blandit leo pharetra. Vivamus facilisis risus quis neque venenatis"
-                },
-                new Answer
-                {
-                    Selected = false,
-                    Content = "quis suscipit dui euismod"
-                },
-                new Answer
-                {
-                    Selected = false,
-                    Content = "Quisque efficitur tincidunt quam, vitae dictum libero condimentum sed. Etiam nulla sem, luctus sit amet varius non, venenatis nec magna. Mauris tempor egestas tellus, a commodo ante varius eget."
-                }
-            };
-            Users = new ObservableCollection<UserScore>()
-            {
-                new UserScore
-                {
-                    Score = 5,
-                    Username = "Wydra"
-                },
-                new UserScore
-                {
-                    Score = 4.5d,
-                    Username = "Rosomak"
-                }
-            };
+                await _quizConnection.Connect(LobbyCode, (string)userId);
+            }
+            return;
         }
 
         private void StartTimer()

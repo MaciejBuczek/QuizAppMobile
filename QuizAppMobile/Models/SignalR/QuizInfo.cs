@@ -8,6 +8,6 @@ namespace QuizAppMobile.Models.SignalR
     {
         public string QuizTitle { get; set; }
 
-        public List<UserScore> UserScores { get; set; }
+        public List<UserScore> UsersScores { get; set; }
     }
 }

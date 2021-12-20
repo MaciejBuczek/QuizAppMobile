@@ -22,7 +22,7 @@ namespace QuizAppMobile.Services.Connections
             _hubConnectionProvider = DependencyService.Resolve<IHubConnectionProvider>();
             _hubConnection = _hubConnectionProvider.GetConnection(APIConfigs.BaseURL + APIConfigs.QuizHubURL);
 
-            _hubConnection.On<QuizInfo>("initializeQuiz", initializeQuizAction);
+            _hubConnection.On<QuizInfo>("initalizeQuiz", initializeQuizAction);
             _hubConnection.On<List<UserScore>>("updateScoreboard", updateScoreboardAction);
             _hubConnection.On<PersonalisedQuestion>("loadQuestion", loadQuestionAction);
             _hubConnection.On<string>("displayError", displayErrorAction);

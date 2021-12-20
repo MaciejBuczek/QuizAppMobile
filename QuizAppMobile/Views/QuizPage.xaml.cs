@@ -20,17 +20,12 @@ namespace QuizAppMobile.Views
         {
             InitializeComponent();
 
+            var vm = BindingContext as QuizVM;
 
-            var vm = new QuizVM()
-            {
-                LobbyCode = lobbyCode,
-                Title = "Test Quiz",
-                Question = "Vestibulum at lectus rutrum, pulvinar nulla mattis, ornare purus. In condimentum consequat sodales. Cras nec auctor leo. Morbi cursus augue sit amet metus congue porttitor nec mollis nibh. Donec bibendum lectus eget tellus mattis.",
-                StartTimerAction = StartTimer,
-                StopTimerAction = StopTimer
-            };
-
-            BindingContext = vm;
+            vm.LobbyCode = lobbyCode;
+            vm.StartTimerAction = StartTimer;
+            vm.StopTimerAction = StopTimer;
+            vm.Connect();
         }
 
         private void StartTimer(int totalDuration)

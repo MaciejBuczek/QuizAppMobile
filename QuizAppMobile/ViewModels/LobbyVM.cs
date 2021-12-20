@@ -117,16 +117,6 @@ namespace QuizAppMobile.ViewModels
             lobby.ConnectedUsers.ForEach(u => UserCollection.Add(new User { Username = u }));
         }
 
-        private Label GetUserLabel (string username)
-        {
-            var usernameLabel = new Label
-            {
-                Text = username,
-                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
-            };
-            return usernameLabel;
-        }
-
         private StackLayout GetHostStackLayout(string username)
         {
             var stackLayout = new StackLayout

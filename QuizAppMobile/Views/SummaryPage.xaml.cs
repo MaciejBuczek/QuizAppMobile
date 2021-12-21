@@ -19,6 +19,7 @@ namespace QuizAppMobile.Views
 
             var vm = BindingContext as SummaryVM;
             vm.LobbyCode = lobbyCode;
+            vm.GetSummaryInfo();
         }
     }
 }

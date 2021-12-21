@@ -2,17 +2,53 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:QuizAppMobile.ViewModels"
-             x:Class="QuizAppMobile.Views.SummaryPage">
-
+             x:Class="QuizAppMobile.Views.SummaryPage"
+             xmlns:fontawesome="clr-namespace:FontAwesome">
+    
     <ContentPage.BindingContext>
         <viewmodels:SummaryVM/>
     </ContentPage.BindingContext>
-
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Orientation="Vertical" Margin="5">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Label Text="This quiz is finished!" FontSize="Medium" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold"/>
+                <Label Text="{x:Static fontawesome:FontAwesomeIcons.FlagCheckered}" 
+                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Medium" Margin="0,2,0,0" 
+                       TextColor="{StaticResource Key=Primary}"/>
+            </StackLayout>
+            <Label Text="Thank you for participating!" FontSize="Medium"/>
+            
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Your total score is: " FontSize="Medium"/>
+                <Label Text="{Binding Score}" FontSize="Medium" TextColor="{StaticResource Key=Primary}"/>
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal">
+                <Label Text="There were " FontSize="Medium"/>
+                <Label Text="{Binding UsersScores.Count}" FontSize="Medium" TextColor="{StaticResource Key=Primary}"/>
+                <Label Text=" total participating, out of which You took "/>
+                <Label Text="{Binding Place}" FontSize="Medium" TextColor="{StaticResource Key=Primary}"/>
+                <Label Text=" place" FontSize="Medium"/>
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Label Text="Scoreboard" FontSize="Medium" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold"/>
+                <Label Text="{x:Static fontawesome:FontAwesomeIcons.Trophy}" 
+                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Medium" Margin="0,2,0,0"
+                       TextColor="{StaticResource Key=Primary}"/>
+                <ListView ItemsSource="{Binding UsersScores}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Place}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Username}" FontSize="Medium" HorizontalOptions="StartAndExpand" Margin="2,0,0,0"/>
+                                <Label Text="{Binding Score}" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

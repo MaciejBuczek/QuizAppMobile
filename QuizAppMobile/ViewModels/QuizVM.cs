@@ -3,6 +3,7 @@ using QuizAppMobile.Models;
 using QuizAppMobile.Models.SignalR;
 using QuizAppMobile.Services.Connections;
 using QuizAppMobile.Services.Interfaces;
+using QuizAppMobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -122,7 +123,8 @@ namespace QuizAppMobile.ViewModels
 
         private async Task RedirectToSummary()
         {
-            await _messageService.DisplaySuccessMessage("summary");
+            await Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PushAsync(new SummaryPage(LobbyCode));
         }
 
         private async Task BeginQuiz()

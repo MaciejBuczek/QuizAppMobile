@@ -2,7 +2,7 @@
 using QuizAppMobile.Constants;
 using QuizAppMobile.Models;
 using QuizAppMobile.Models.SignalR;
-using QuizAppMobile.Services.Implementations;
+using QuizAppMobile.Services.Connections;
 using QuizAppMobile.Services.Interfaces;
 using QuizAppMobile.Views;
 using System;
@@ -115,16 +115,6 @@ namespace QuizAppMobile.ViewModels
         {
             HostBox.Children.Add(GetHostStackLayout(lobby.OwnerUsername));
             lobby.ConnectedUsers.ForEach(u => UserCollection.Add(new User { Username = u }));
-        }
-
-        private Label GetUserLabel (string username)
-        {
-            var usernameLabel = new Label
-            {
-                Text = username,
-                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
-            };
-            return usernameLabel;
         }
 
         private StackLayout GetHostStackLayout(string username)

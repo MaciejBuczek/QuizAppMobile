@@ -9,10 +9,45 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Vertical" Padding="5" WidthRequest="700">
+                    <Label Text="{Binding Title}" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="Large"/>
+                    <Label Text="{Binding Question}" FontSize="Medium"/>
+                    <Button Text="Submit Answers" FontSize="Medium" TextColor="White"
+                            BorderColor="{StaticResource Key=ButtonBorderPrimary}" 
+                            BackgroundColor="{StaticResource Key=ButtonBackgroundPrimary}"
+                            Command="{Binding SubmitAnswersCommand}"/>
+                    <ListView VerticalOptions="StartAndExpand" ItemsSource="{Binding Answers}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                        <CheckBox IsChecked="{Binding Selected}"/>
+                                        <Label VerticalOptions="CenterAndExpand" Text="{Binding Content}" FontSize="Medium"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" HorizontalOptions="Center">
+                    <Label x:Name="TimerLabel" Text="00:00" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="80" HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="Scoreboard" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold" FontSize="Medium"/>
+                    <ListView VerticalOptions="StartAndExpand" ItemsSource="{Binding Users}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                        <Label Text="{Binding Score}" FontSize="Medium" Margin="0,0,5,0"/>
+                                        <Label Text="{Binding Username}" FontSize="Medium"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

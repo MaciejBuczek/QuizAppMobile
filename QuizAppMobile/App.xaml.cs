@@ -1,10 +1,11 @@
-﻿using QuizAppMobile.Services.Implementations;
+﻿using QuizAppMobile.Services.Connections;
 using QuizAppMobile.Services.Interfaces;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using QuizAppMobile.Constants;
 using QuizAppMobile.Views;
+using QuizAppMobile.Services.Implementations;
 
 namespace QuizAppMobile
 {
@@ -21,6 +22,7 @@ namespace QuizAppMobile
                 nextPage = new HomePage();
             else
                 nextPage = new StartPage();
+
             MainPage = new NavigationPage(nextPage);
         }
 
@@ -43,6 +45,7 @@ namespace QuizAppMobile
             DependencyService.Register<IHttpClientProvider, UnsafeHttpClientProvider>();
             DependencyService.Register<ILobbyService, LobbyAPIService>();
             DependencyService.Register<IHubConnectionProvider, UnsafeConnectionProvider>();
+            DependencyService.Register<ISummaryService, SummaryAPIService>();
         }
     }
 }

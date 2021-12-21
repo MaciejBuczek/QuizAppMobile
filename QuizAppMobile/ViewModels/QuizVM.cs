@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -25,8 +26,6 @@ namespace QuizAppMobile.ViewModels
         private string _title;
 
         private string _question;
-
-        public string LobbyCode { get; set; }
 
         public string Title {
             get
@@ -52,6 +51,8 @@ namespace QuizAppMobile.ViewModels
                 OnPropertyChanged(nameof(Question));
             }
         }
+
+        public string LobbyCode { get; set; }
 
         public int QuestionTime { get; set; }
 
@@ -85,22 +86,22 @@ namespace QuizAppMobile.ViewModels
         private void InitializeQuiz(QuizInfo quizInfo)
         {
             Title = quizInfo.QuizTitle;
-            Users.Clear();
-            quizInfo.UsersScores.ForEach(us => Users.Add(us));
+            UpdateScoreboard(quizInfo.UsersScores);
         }
 
         private void UpdateScoreboard(List<Models.SignalR.UserScore> userScores)
         {
-
+            Users.Clear();
+            userScores.ForEach(us => Users.Add(us));
         }
 
         private void LoadQuestion(PersonalisedQuestion question)
         {
-            Question = question.Question;
+            Question = RemoveHTMLTags(question.Question);
             Answers.Clear();
             question.Answers.Select(a => new Answer
             {
-                Content = a,
+                Content = RemoveHTMLTags(a),
                 Selected = false
             }).
             ToList()
@@ -121,7 +122,7 @@ namespace QuizAppMobile.ViewModels
 
         private async Task RedirectToSummary()
         {
-
+            await _messageService.DisplaySuccessMessage("summary");
         }
 
         private async Task BeginQuiz()
@@ -150,14 +151,9 @@ namespace QuizAppMobile.ViewModels
             return;
         }
 
-        private void StartTimer()
+        private string RemoveHTMLTags(string text)
         {
-            StartTimerAction(5);
-        }
-
-        private void StopTimer()
-        {
-            StopTimerAction();
+            return Regex.Replace(text, "<.*?>", string.Empty);
         }
     }
 }

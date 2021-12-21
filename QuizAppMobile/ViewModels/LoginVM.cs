@@ -37,9 +37,12 @@ namespace QuizAppMobile.ViewModels
                 return;
             }
 
-            if (true/*await _userService.LoginAsync(Username, Password)*/)
+            var response = await _userService.LoginAsync(Username, Password);
+
+            if (response.Succeded)
             {
                 Application.Current.Properties[Properties.Username] = Username;
+                Application.Current.Properties[Properties.UserId] = response.UserId;
                 await Application.Current.MainPage.Navigation.PushAsync(new HomePage());
             }               
             else

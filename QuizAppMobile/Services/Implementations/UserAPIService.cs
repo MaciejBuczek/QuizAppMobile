@@ -40,9 +40,8 @@ namespace QuizAppMobile.Services.Connections
             var response = await client.PostAsync(url, httpContent);
             if (response.IsSuccessStatusCode)
             {
-                var responseJson = await response.Content.ReadAsStringAsync();
-                var responseObj = JsonConvert.DeserializeObject<string>(responseJson);
-                return (true, responseObj);
+                var responseString = await response.Content.ReadAsStringAsync();
+                return (true, responseString);
             }
             return (false, null);
         }

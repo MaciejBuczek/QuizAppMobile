@@ -10,11 +10,11 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Margin="5">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Label Text="This quiz is finished!" FontSize="Medium" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold"/>
+        <StackLayout Orientation="Vertical" Margin="20,10">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,5,0,10">
+                <Label Text="This quiz is finished!" FontSize="Title" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold"/>
                 <Label Text="{x:Static fontawesome:FontAwesomeIcons.FlagCheckered}" 
-                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Medium" Margin="0,2,0,0" 
+                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Title" Margin="0,2,0,0" 
                        TextColor="{StaticResource Key=Primary}"/>
             </StackLayout>
             <Label Text="Thank you for participating!" FontSize="Medium"/>
@@ -24,31 +24,38 @@
                 <Label Text="{Binding Score}" FontSize="Medium" TextColor="{StaticResource Key=Primary}"/>
             </StackLayout>
             
-            <StackLayout Orientation="Horizontal">
-                <Label Text="There were " FontSize="Medium"/>
-                <Label Text="{Binding UsersScores.Count}" FontSize="Medium" TextColor="{StaticResource Key=Primary}"/>
-                <Label Text=" total participating, out of which You took "/>
-                <Label Text="{Binding Place}" FontSize="Medium" TextColor="{StaticResource Key=Primary}"/>
-                <Label Text=" place" FontSize="Medium"/>
-            </StackLayout>
+            <Label FontSize="Medium">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="There were "/>
+                        <Span Text="{Binding UsersScoresPlaces.Count}" TextColor="{StaticResource Key=Primary}" />
+                        <Span Text=" total participating, out of which You took "/>
+                        <Span Text="{Binding Place}" TextColor="{StaticResource Key=Primary}"/>
+                        <Span Text=" place"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
             
-            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Label Text="Scoreboard" FontSize="Medium" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,10">
+                <Label Text="Scoreboard" FontSize="Title" TextColor="{StaticResource Key=Primary}" FontAttributes="Bold"/>
                 <Label Text="{x:Static fontawesome:FontAwesomeIcons.Trophy}" 
-                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Medium" Margin="0,2,0,0"
+                       FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Title" Margin="0,2,0,0"
                        TextColor="{StaticResource Key=Primary}"/>
-                <ListView ItemsSource="{Binding UsersScores}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
+            </StackLayout>
+
+            <ListView ItemsSource="{Binding UsersScoresPlaces}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="{Binding Place}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
                                 <Label Text="{Binding Username}" FontSize="Medium" HorizontalOptions="StartAndExpand" Margin="2,0,0,0"/>
                                 <Label Text="{Binding Score}" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
                             </StackLayout>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

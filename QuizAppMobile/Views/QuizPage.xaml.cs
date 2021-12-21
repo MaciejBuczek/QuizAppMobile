@@ -16,12 +16,16 @@ namespace QuizAppMobile.Views
     {
         private bool _stopTimer = false;
         private QuizVM _vm;
+        private Action _timerStoppedAction;
 
         public QuizPage(string lobbyCode)
         {
             InitializeComponent();
 
+
             _vm = BindingContext as QuizVM;
+
+            _timerStoppedAction = _vm.TimerStopped;
 
             _vm.LobbyCode = lobbyCode;
             _vm.StartTimerAction = StartTimer;
@@ -37,10 +41,10 @@ namespace QuizAppMobile.Views
             {
                 TimerLabel.Text = GenerateFormattedTime(duration, totalDuration);
                 duration++;
-
                 if(_stopTimer || totalDuration == duration)
                 {
                     _vm.SubmitAnswers();
+                    _timerStoppedAction.Invoke();
                     return false;
                 }
                 return true;

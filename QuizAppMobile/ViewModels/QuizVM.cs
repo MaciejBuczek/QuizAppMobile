@@ -67,6 +67,8 @@ namespace QuizAppMobile.ViewModels
 
         public ICommand SubmitAnswersCommand { get; set; }
 
+        public bool IsTimerRuning { get; set; }
+
         public QuizVM()
         {
             _messageService = DependencyService.Resolve<IMessageService>();
@@ -108,6 +110,7 @@ namespace QuizAppMobile.ViewModels
             ToList()
             .ForEach(a => Answers.Add(a));
             StartTimerAction(question.Time);
+            IsTimerRuning = true;
         }
 
         private async Task DisplayError(string message)
@@ -118,6 +121,14 @@ namespace QuizAppMobile.ViewModels
 
         private async Task RequestQuestion()
         {
+            await Task.Run(() =>
+            {
+                while (true)
+                {
+                    if (IsTimerRuning == false)
+                        break;
+                }
+            });
             await _quizConnection.GetQuestion();
         }
 
@@ -156,6 +167,11 @@ namespace QuizAppMobile.ViewModels
         private string RemoveHTMLTags(string text)
         {
             return Regex.Replace(text, "<.*?>", string.Empty);
+        }
+
+        public void TimerStopped()
+        {
+            IsTimerRuning = false;
         }
     }
 }

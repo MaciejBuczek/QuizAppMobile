@@ -18,7 +18,7 @@ namespace QuizAppMobile.ViewModels
 
         public string LobbyCode { get; set; }
 
-        public ObservableCollection<UserScorePlace> UsersScores { get; set; }
+        public ObservableCollection<UserScorePlace> UsersScores { get; set; } = new ObservableCollection<UserScorePlace>();
 
         public double Score
         {
@@ -62,7 +62,6 @@ namespace QuizAppMobile.ViewModels
 
         public SummaryVM()
         {
-            UsersScores = new ObservableCollection<UserScorePlace>();
             _summaryService = DependencyService.Resolve<ISummaryService>();
             _messageService = DependencyService.Resolve<IMessageService>();
         }
@@ -75,12 +74,13 @@ namespace QuizAppMobile.ViewModels
             {
                 for(int i = 1; i <= response.UsersScores.Count; i++)
                 {
-                    UsersScores.Add(new UserScorePlace
+                    var userScorePlace = new UserScorePlace()
                     {
                         Username = response.UsersScores[i].Username,
                         Score = response.UsersScores[i].Score,
                         Place = i
-                    });
+                    };
+                    UsersScores.Add(userScorePlace);
                 }
             }
             else

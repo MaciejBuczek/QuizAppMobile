@@ -15,5 +15,7 @@
         public static readonly string LobbyHubURL = "hubs/lobby";
 
         public static readonly string QuizHubURL = "hubs/quiz";
+
+        public static readonly string SummaryURL = "Lobby/Summary";
     }
 }

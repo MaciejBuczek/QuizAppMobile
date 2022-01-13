@@ -18,7 +18,7 @@
                 <Label Text="{Binding Description}" FontSize="Large" Margin="0,10,0,0"/>
                 <StackLayout Orientation="Vertical" Margin="0,10,0,0">
                     <StackLayout Orientation="Horizontal">
-                        <StackLayout Orientation="Horizontal" WidthRequest="170">
+                        <StackLayout Orientation="Horizontal" WidthRequest="200">
                             <Label Text="{x:Static fontawesome:FontAwesomeIcons.QuestionCircle}" 
                                        FontFamily="{StaticResource FontAwesomeRegular}" FontSize="Medium" Margin="0,2,0,0"/>
                             <Label Text="Total questions:" FontAttributes="Bold" FontSize="Medium"/>
@@ -32,7 +32,7 @@
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <StackLayout Orientation="Horizontal" WidthRequest="170">
+                        <StackLayout Orientation="Horizontal" WidthRequest="200">
                             <Label Text="{x:Static fontawesome:FontAwesomeIcons.User}" 
                                        FontFamily="{StaticResource FontAwesomeSolid}" FontSize="Medium" Margin="0,2,0,0"/>
                             <Label Text="Created by:" FontAttributes="Bold" FontSize="Medium"/>

@@ -94,6 +94,7 @@ namespace QuizAppMobile.ViewModels
                 if (userScores[i].Username == username)
                     place = i;
             }
+            place++;
             switch (place)
             {
                 case 1:
